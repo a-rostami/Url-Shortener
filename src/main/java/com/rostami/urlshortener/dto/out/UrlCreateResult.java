@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UrlFindResult {
-    private String originalUrl;
-    private String shortUrl;
+public class UrlCreateResult<T> {
+    private boolean success;
+    private T data;
 }
