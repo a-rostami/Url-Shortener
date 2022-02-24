@@ -2,6 +2,7 @@ package com.rostami.urlshortener.controller.api.errors;
 
 import com.rostami.urlshortener.controller.api.core.ServiceResult;
 import com.rostami.urlshortener.controller.api.errors.api.ApiError;
+import com.rostami.urlshortener.exception.UrlNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -31,6 +32,14 @@ import static org.springframework.http.HttpStatus.*;
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     // ---------------------- CUSTOM Exception Handling -------------------------------------------
+
+    @ExceptionHandler(UrlNotFoundException.class)
+    protected ResponseEntity<ServiceResult<Void>> handleUrlnotFound(
+            UrlNotFoundException ex) {
+        var apiError = new ApiError(NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 
 
     // ---------------------- Default Exception Handling -------------------------------------------
