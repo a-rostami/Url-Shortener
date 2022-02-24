@@ -1,7 +1,7 @@
 package com.rostami.urlshortener.controller;
 
 import com.rostami.urlshortener.dto.api.ResponseResult;
-import com.rostami.urlshortener.dto.in.ShortUrlCreateParam;
+import com.rostami.urlshortener.dto.in.UrlCreateParam;
 import com.rostami.urlshortener.dto.out.UrlCreateResult;
 import com.rostami.urlshortener.dto.out.UrlFindResult;
 import com.rostami.urlshortener.service.UrlService;
@@ -19,11 +19,11 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/generateShortUrl")
-    public ResponseEntity<ResponseResult<UrlCreateResult<String>>> generateShortUrl(@Valid @RequestBody ShortUrlCreateParam shortUrlCreateParam){
-        UrlCreateResult<String> result = urlService.generateShortUrl(shortUrlCreateParam.getOriginalUrl());
-        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseResult.<UrlCreateResult<String>>builder()
+    public ResponseEntity<ResponseResult<String>> generateShortUrl(@Valid @RequestBody UrlCreateParam urlCreateParam){
+        UrlCreateResult<String> result = urlService.generateShortUrl(urlCreateParam.getOriginalUrl());
+        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseResult.<String>builder()
                 .message("Successfully Created Short Url")
-                .data(result)
+                .data(result.getData())
                 .build());
     }
 
